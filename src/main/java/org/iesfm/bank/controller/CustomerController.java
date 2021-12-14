@@ -24,7 +24,7 @@ public class CustomerController {
 
     @RequestMapping(method = RequestMethod.POST, path = "/customers")
     public void insertCustomer(@RequestBody Customer customer) {
-        if(customerRepository.existsById(customer.getId())) {
+        if(customerRepository.existsById(customer.getCustomerId())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Customer already exists");
         } else {
             customerRepository.save(customer);

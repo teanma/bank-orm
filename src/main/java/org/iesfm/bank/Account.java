@@ -1,8 +1,6 @@
 package org.iesfm.bank;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 
@@ -10,19 +8,21 @@ import java.util.Objects;
 public class Account {
 
     @Id
-    private String iban;
-    @Column(name = "owner_id")
+    @Column(name = "iban")
+    private String accountIban;
+    @OneToMany
+    @JoinColumn(name = "owner_id", referencedColumnName = "id")
     private int ownerId;
     private double balance;
     @Column(name = "open_date")
     private Date openDate;
 
-    public String getIban() {
-        return iban;
+    public String getAccountIban() {
+        return accountIban;
     }
 
-    public void setIban(String iban) {
-        this.iban = iban;
+    public void setAccountIban(String accountIban) {
+        this.accountIban = accountIban;
     }
 
     public int getOwnerId() {
@@ -54,11 +54,11 @@ public class Account {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
-        return ownerId == account.ownerId && Double.compare(account.balance, balance) == 0 && Objects.equals(iban, account.iban) && Objects.equals(openDate, account.openDate);
+        return ownerId == account.ownerId && Double.compare(account.balance, balance) == 0 && Objects.equals(accountIban, account.accountIban) && Objects.equals(openDate, account.openDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(iban, ownerId, balance, openDate);
+        return Objects.hash(accountIban, ownerId, balance, openDate);
     }
 }

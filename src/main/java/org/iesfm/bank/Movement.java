@@ -12,27 +12,29 @@ public class Movement {
 
     @Id
     @GeneratedValue
-    private int id;
-    private String iban;
+    @Column(name = "id")
+    private int movementId;
+    @Column(name = "iban")
+    private String movementIban;
     @Column(name = "movement_date")
     private Date movementDate;
     private double amount;
     private String description;
 
-    public int getId() {
-        return id;
+    public int getMovementId() {
+        return movementId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setMovementId(int movementId) {
+        this.movementId = movementId;
     }
 
-    public String getIban() {
-        return iban;
+    public String getMovementIban() {
+        return movementIban;
     }
 
-    public void setIban(String iban) {
-        this.iban = iban;
+    public void setMovementIban(String movementIban) {
+        this.movementIban = movementIban;
     }
 
     public Date getMovementDate() {
@@ -64,11 +66,11 @@ public class Movement {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Movement movement = (Movement) o;
-        return id == movement.id && Double.compare(movement.amount, amount) == 0 && Objects.equals(iban, movement.iban) && Objects.equals(movementDate, movement.movementDate) && Objects.equals(description, movement.description);
+        return movementId == movement.movementId && Double.compare(movement.amount, amount) == 0 && Objects.equals(movementIban, movement.movementIban) && Objects.equals(movementDate, movement.movementDate) && Objects.equals(description, movement.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, iban, movementDate, amount, description);
+        return Objects.hash(movementId, movementIban, movementDate, amount, description);
     }
 }

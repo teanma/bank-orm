@@ -11,18 +11,19 @@ public class Customer {
 
     @Id
     @GeneratedValue
-    private int id;
+    @Column(name = "id")
+    private int customerId;
     private String nif;
     private String name;
     private String surname;
     private int cp;
 
-    public int getId() {
-        return id;
+    public int getCustomerId() {
+        return customerId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 
     public String getNif() {
@@ -62,11 +63,11 @@ public class Customer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customer customer = (Customer) o;
-        return id == customer.id && cp == customer.cp && Objects.equals(nif, customer.nif) && Objects.equals(name, customer.name) && Objects.equals(surname, customer.surname);
+        return customerId == customer.customerId && cp == customer.cp && Objects.equals(nif, customer.nif) && Objects.equals(name, customer.name) && Objects.equals(surname, customer.surname);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nif, name, surname, cp);
+        return Objects.hash(customerId, nif, name, surname, cp);
     }
 }
