@@ -50,13 +50,13 @@ public class AccountController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/customers/{id}/accounts")
-    public List<Account> listCustomerAccounts(@RequestBody Account account, @PathVariable ("id") int id) {
+    @RequestMapping(method = RequestMethod.GET, path = "/customers/{customerId}/accounts")
+    public List<Account> listCustomerAccounts(@PathVariable("customerId") int customerId){
         return null;
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/customers/{id}/accounts")
-    public void insertAccountToCustomer(@RequestBody Account account, @PathVariable ("id") int id) {
-
+    public void insertAccountToCustomer(@PathVariable("id") int id, @RequestBody Account account){
+        accountRepository.save(account);
     }
 }
