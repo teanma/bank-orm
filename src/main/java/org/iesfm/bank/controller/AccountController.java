@@ -56,7 +56,7 @@ public class AccountController {
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/customers/{id}/accounts")
-    public void insertAccount(@RequestBody Account account, @PathVariable ("id") int id) {
+    public void insertAccountToCustomer(@RequestBody Account account, @PathVariable ("id") int id) {
 
     }
 }
