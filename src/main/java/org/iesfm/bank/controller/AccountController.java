@@ -1,13 +1,11 @@
 package org.iesfm.bank.controller;
 
 import org.iesfm.bank.Account;
+import org.iesfm.bank.Customer;
 import org.iesfm.bank.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -22,6 +20,15 @@ public class AccountController {
     @RequestMapping(method = RequestMethod.GET, path = "/accounts")
     public List<Account> listAccounts() {
         return accountRepository.findAll();
+    }
+
+    @RequestMapping(method = RequestMethod.POST, path = "/accounts")
+    public void insertAccount(@RequestBody Account account) {
+        if(accountRepository.existsById(account.getAccountIban())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Account already exists");
+        } else {
+            accountRepository.save(account);
+        }
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/accounts/{iban}")
@@ -39,7 +46,17 @@ public class AccountController {
         if (accountRepository.existsById(iban)) {
             accountRepository.deleteById(iban);
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account doesn't exist");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found");
         }
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/customers/{id}/accounts")
+    public List<Account> listCustomerAccounts(@RequestBody Account account, @PathVariable ("id") int id) {
+        return null;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, path = "/customers/{id}/accounts")
+    public void insertAccount(@RequestBody Account account, @PathVariable ("id") int id) {
+
     }
 }
