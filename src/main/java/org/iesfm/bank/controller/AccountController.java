@@ -62,7 +62,7 @@ public class AccountController {
     @RequestMapping(method = RequestMethod.POST, path = "/customers/{id}/accounts")
     public void insertAccountToCustomer(@PathVariable("id") int customerId, @RequestBody Account account){
         if (!customerRepository.existsById(customerId)) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Customer doesn't exists");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found");
         } else {
             accountRepository.save(account);
         }

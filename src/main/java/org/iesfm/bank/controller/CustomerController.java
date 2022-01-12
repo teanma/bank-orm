@@ -46,7 +46,7 @@ public class CustomerController {
         if (customerRepository.existsById(id)) {
             customerRepository.deleteById(id);
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer doesn't exist");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found");
         }
     }
 }
