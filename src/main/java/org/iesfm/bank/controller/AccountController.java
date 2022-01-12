@@ -3,6 +3,7 @@ package org.iesfm.bank.controller;
 import org.iesfm.bank.Account;
 import org.iesfm.bank.Customer;
 import org.iesfm.bank.repository.AccountRepository;
+import org.iesfm.bank.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,9 @@ public class AccountController {
 
     @Autowired
     private AccountRepository accountRepository;
+
+    @Autowired
+    private CustomerRepository customerRepository;
 
     @RequestMapping(method = RequestMethod.GET, path = "/accounts")
     public List<Account> listAccounts() {
@@ -50,13 +54,17 @@ public class AccountController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/customers/{customerId}/accounts")
-    public List<Account> listCustomerAccounts(@PathVariable("customerId") int customerId){
-        return null;
+    @RequestMapping(method = RequestMethod.GET, path = "/customers/{id}/accounts")
+    public List<Account> listCustomerAccounts(@PathVariable("id") int customerId){
+        return accountRepository.findByOwnerId(customerId);
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/customers/{id}/accounts")
-    public void insertAccountToCustomer(@PathVariable("id") int id, @RequestBody Account account){
-        accountRepository.save(account);
+    public void insertAccountToCustomer(@PathVariable("id") int customerId, @RequestBody Account account){
+        if (!customerRepository.existsById(customerId)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Customer doesn't exists");
+        } else {
+            accountRepository.save(account);
+        }
     }
 }
